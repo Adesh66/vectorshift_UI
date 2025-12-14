@@ -10,6 +10,11 @@ import { InputNode } from './nodes/inputNode';
 import { LLMNode } from './nodes/llmNode';
 import { OutputNode } from './nodes/outputNode';
 import { TextNode } from './nodes/textNode';
+import { FilterNode } from './nodes/filterNode';
+import { TransformNode } from './nodes/transformNode';
+import { ApiNode } from './nodes/apiNode';
+import { DatabaseNode } from './nodes/databaseNode';
+import { ConditionalNode } from './nodes/conditionalNode';
 
 import 'reactflow/dist/style.css';
 
@@ -20,6 +25,11 @@ const nodeTypes = {
   llm: LLMNode,
   customOutput: OutputNode,
   text: TextNode,
+  filter: FilterNode,
+  transform: TransformNode,
+  api: ApiNode,
+  database: DatabaseNode,
+  conditional: ConditionalNode,
 };
 
 const selector = (state) => ({
@@ -90,7 +100,12 @@ export const PipelineUI = () => {
 
     return (
         <>
-        <div ref={reactFlowWrapper} style={{width: '100wv', height: '70vh'}}>
+        <div ref={reactFlowWrapper} style={{
+            width: '100%', 
+            height: '100%',
+            backgroundColor: '#ffffff',
+            flex: 1
+        }}>
             <ReactFlow
                 nodes={nodes}
                 edges={edges}
@@ -105,9 +120,27 @@ export const PipelineUI = () => {
                 snapGrid={[gridSize, gridSize]}
                 connectionLineType='smoothstep'
             >
-                <Background color="#aaa" gap={gridSize} />
-                <Controls />
-                <MiniMap />
+                <Background 
+                    color="#cbd5e0" 
+                    gap={gridSize}
+                    style={{ backgroundColor: '#f8fafc' }}
+                />
+                <Controls 
+                    style={{
+                        button: {
+                            backgroundColor: '#ffffff',
+                            border: '1px solid #e2e8f0',
+                            color: '#334155'
+                        }
+                    }}
+                />
+                <MiniMap 
+                    style={{
+                        backgroundColor: '#f8fafc',
+                        border: '1px solid #e2e8f0'
+                    }}
+                    maskColor="rgba(0, 0, 0, 0.05)"
+                />
             </ReactFlow>
         </div>
         </>
