@@ -1,6 +1,3 @@
-// baseNode.js
-// Base Node component for creating reusable node abstractions
-
 import { useState } from 'react';
 import { Handle, Position } from 'reactflow';
 
@@ -19,7 +16,6 @@ export const BaseNode = ({
     contentComponent = null,
   } = config;
 
-  // Initialize state for all fields
   const [fieldValues, setFieldValues] = useState(() => {
     const initialValues = {};
     fields.forEach(field => {
@@ -27,20 +23,18 @@ export const BaseNode = ({
     });
     return initialValues;
   });
-
-  // Handle field changes
   const handleFieldChange = (fieldName, value) => {
     setFieldValues(prev => ({
       ...prev,
       [fieldName]: value
     }));
-    // Optionally trigger data update in parent
+    
     if (data?.onFieldChange) {
       data.onFieldChange(fieldName, value);
     }
   };
 
-  // Render different field types
+  
   const renderField = (field) => {
     const value = fieldValues[field.name];
 

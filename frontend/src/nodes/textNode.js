@@ -1,4 +1,3 @@
-// textNode.js
 
 import { useState, useEffect, useRef } from 'react';
 import { Handle, Position } from 'reactflow';
@@ -9,7 +8,6 @@ export const TextNode = ({ id, data }) => {
   const [variables, setVariables] = useState([]);
   const textareaRef = useRef(null);
 
-  // Extract variables from text (e.g., {{ variable }})
   useEffect(() => {
     const regex = /\{\{\s*(\w+)\s*\}\}/g;
     const matches = [];
@@ -25,15 +23,12 @@ export const TextNode = ({ id, data }) => {
     setVariables(matches);
   }, [currText]);
 
-  // Dynamically adjust node size based on text content
   useEffect(() => {
     if (textareaRef.current) {
       const textarea = textareaRef.current;
       
-      // Reset height to get accurate scrollHeight
       textarea.style.height = 'auto';
       
-      // Calculate new dimensions
       const newHeight = Math.max(100, Math.min(textarea.scrollHeight + 80, 400));
       const lines = currText.split('\n').length;
       const maxLineLength = Math.max(...currText.split('\n').map(line => line.length));
@@ -52,7 +47,6 @@ export const TextNode = ({ id, data }) => {
       className="border-2 border-yellow-400 rounded-lg bg-yellow-50 p-3 shadow-md hover:shadow-lg transition-shadow"
       style={{ width: nodeSize.width, minHeight: nodeSize.height }}
     >
-      {/* Dynamic variable handles on the left */}
       {variables.map((variable, index) => (
         <Handle
           key={`${id}-${variable}`}
@@ -67,7 +61,6 @@ export const TextNode = ({ id, data }) => {
         />
       ))}
       
-      {/* Output handle on the right */}
       <Handle
         type="source"
         position={Position.Right}
@@ -94,7 +87,6 @@ export const TextNode = ({ id, data }) => {
         </label>
       </div>
 
-      {/* Display detected variables */}
       {variables.length > 0 && (
         <div className="mt-2 text-[11px] text-stone-600 px-2 py-1.5 bg-yellow-100 rounded border border-yellow-200">
           <strong>Variables:</strong> {variables.join(', ')}
